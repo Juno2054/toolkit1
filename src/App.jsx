@@ -72,13 +72,17 @@ let ULB = styled.ul`
     margin: 0px auto;
     
 `
-let LIB = styled.li`
+let LIB = styled(Link)`
+    text-decoration: none;
+    color: white;;
+li{
     display: flex;
     flex-direction: column;
     padding: 20px;
     border: 1px solid white;
     border-radius: 5px;
     cursor: pointer;
+    }
 `;
 let Form = styled.form`
    width: 500px;
@@ -136,6 +140,8 @@ let Pcon = styled.p`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-decoration: none;
+    color: white;;
 `
 // 위에는 styled-components
 export {
@@ -323,7 +329,7 @@ function App() {
           ) : null
         ))}
         </>} />
-        <Route path="/detail" element={<Detail Container={Container} ></Detail>} />
+        <Route path="/detail/:id" element={<Detail Container={Container} list={list}></Detail>} />
 
       </Routes>
 

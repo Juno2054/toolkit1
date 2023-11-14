@@ -1,14 +1,38 @@
 import React from 'react'
 import { ULB,LIB,ListDiv,Pcon} from '../App'
-function ContentBox({list,setList,postSelect,setPostSelect,headerclick1, headerclick2, headerclick3, headerclick4}) {
-  const filterList= list.filter(item => item.label === postSelect);
+import { Link } from 'react-router-dom';
+function ContentBox({list,postSelect,headerclick1, headerclick2, headerclick3, headerclick4,}) {
+const filterList= list.filter(item => item.label === postSelect);
+
+
   return (
     <ListDiv>
-    {
-    filterList.map((list,i)=>(
-      <ULB key={i}>
-        <LIB>
-          <section style={{ display: 'flex', }}>
+                {headerclick1 && (
+        <div>
+         카리나
+        </div>
+      )}
+      {headerclick2 && (
+        <div>
+         윈터
+        </div>
+      )}
+      {headerclick3 && (
+        <div>
+         닝닝
+        </div>
+      )}
+      {headerclick4 && (
+        <div>
+        지젤
+        </div>
+      )}
+    {filterList.map((list,i)=>(
+   
+      <ULB >
+        <LIB >
+        <Link key={i} to={`/detail/${list.id}`}>
+          <section style={{ display: 'flex' }}>
             <figure style={{
               marginRight: "20px",
               width: "50px",
@@ -24,38 +48,22 @@ function ContentBox({list,setList,postSelect,setPostSelect,headerclick1, headerc
                 }} />
             </figure>
             <div>
-              <span>{list.name}</span>
+              <span style={{
+                textdecoration: "none",
+                color: "white",
+              }}>{list.name}</span>
               <time></time>
             </div>
           </section>
           <Pcon>{list.content}</Pcon>
           <Pcon>{list.label}</Pcon>
+          </Link>
         </LIB>
       </ULB>
+     
     ))}
-          {headerclick1 && (
-        <div>
-         1
-        </div>
-      )}
-      {headerclick2 && (
-        <div>
-         2
-        </div>
-      )}
-      {headerclick3 && (
-        <div>
-         3
-        </div>
-      )}
-      {headerclick4 && (
-        <div>
-        4
-        </div>
-      )}
-
   </ListDiv>
-  )
+  );
 }
 
 export default ContentBox
