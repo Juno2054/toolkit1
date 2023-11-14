@@ -295,7 +295,7 @@ function App() {
               <Label>누구한테?</Label>
               <select 
               onChange={(e)=>{setPostSelect(e.target.value)}}
-            value={setPostSelect}
+            value={postSelect}
               >
                 <option value="카리나">카리나</option>
                 <option value="윈터">윈터</option>

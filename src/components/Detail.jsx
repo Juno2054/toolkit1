@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { Container } from '../App'
 import ContentBox from './ContentBox';
+import { Link } from 'react-router-dom';
 import { ULB,LIB,ListDiv,Pcon} from '../App'
 function Detail({ list }) {
   const { id } = useParams();
@@ -48,7 +49,7 @@ function Detail({ list }) {
           <div style={{display:"none"}}>
           <ContentBox list={list}/>
           </div>
-         
+          <Link to='/'>되돌아가기</Link>
         </LIB>
       </ULB>
      

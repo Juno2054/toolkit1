@@ -56,7 +56,7 @@ const filterList= list.filter(item => item.label === postSelect);
             </div>
           </section>
           <Pcon>{list.content}</Pcon>
-          <Pcon>{list.label}</Pcon>
+          {/* <Pcon>{list.label}</Pcon> */}
           </Link>
         </LIB>
       </ULB>
