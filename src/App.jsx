@@ -143,6 +143,22 @@ let Pcon = styled.p`
     text-decoration: none;
     color: white;;
 `
+let RefBun = styled.button`
+  background-color: ${props=>props.bg };
+  margin: 10px;
+  padding: 5px 5px 5px 5px;
+`
+let TextArea= styled.textarea`
+    width: 95%;
+    background-color: rgb(37, 33, 33);
+    border-radius: 10px;
+    padding: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: white;;
+`
 // 위에는 styled-components
 export {
   Container,
@@ -159,7 +175,9 @@ export {
   Textarea,
   Button,
   ListDiv,
-  Pcon
+  Pcon,
+  RefBun,
+  TextArea
 };
 
 function App() {
@@ -197,6 +215,7 @@ function App() {
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
   const [postSelect,setPostSelect]=useState('');
+
 
 
   let [headerclick1, setHeaderClick1] = useState(false);
@@ -295,8 +314,7 @@ function App() {
               <Label>누구한테?</Label>
               <select 
               onChange={(e)=>{setPostSelect(e.target.value)}}
-            value={postSelect}
-              >
+            value={postSelect}>
                 <option value="카리나">카리나</option>
                 <option value="윈터">윈터</option>
                 <option value="닝닝">닝닝</option>
@@ -329,7 +347,7 @@ function App() {
           ) : null
         ))}
         </>} />
-        <Route path="/detail/:id" element={<Detail Container={Container} list={list}></Detail>} />
+        <Route path="/detail/:id" element={<Detail Container={Container} list={list} setList={setList}></Detail>} />
 
       </Routes>
 
