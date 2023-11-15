@@ -1,15 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import './App.css';
 import './reset.css';
 import ContentBox from "./components/ContentBox";
 import styled from 'styled-components';
 import Detail from "./components/Detail";
-import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import uuid4 from "uuid4";
 import fakeData from "./fakeData.json"
-
-
+export const Context1 =createContext();
 // 
 // styled-components 사용 부분
 let Container = styled.div`

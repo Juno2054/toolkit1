@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { ULB,LIB,ListDiv,Pcon,ConBoxTitle} from '../App'
 import { Link } from 'react-router-dom';
+import { Context1 } from '../App';
+
 function ContentBox({list,postSelect,headerclick1, headerclick2, headerclick3, headerclick4,}) {
 const filterList= list.filter(item => item.label === postSelect);
 
+useContext(Context1)
 
   return (
     <ListDiv wd={'500px'}>
