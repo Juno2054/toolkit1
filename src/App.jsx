@@ -363,10 +363,15 @@ function App() {
           </Header>
           <Form onSubmit={function(e){
             e.preventDefault();
-            if(name.length<3){alert(' 닉네임에 3글자이상은 적어줘요')
+            if(name.length<3){alert(' 닉네임에 3글자이상은 적어줘요');
           return}
-            else if(content.length<10){alert(' 내용에 10글자이상은 적어줘요')
+            else if(content.length<10){alert(' 내용에 10글자이상은 적어줘요');
           return}
+          if(name.length>10){alert(' 10글자 이하로써줘요!!');
+          return}
+            else if(content.length>100){alert(' 100글자 이하로 써줘요!!');
+          return}
+
             const newContentsList={
               id:uuid4(),
               name,
@@ -375,14 +380,17 @@ function App() {
               label:postSelect,
             };
             setList([...list,newContentsList]);
-            console.log(list)
+            // console.log(list)
+            setName('');
+            setContent('');
           }}>
             <FormDiv>
               <Label>닉네임:</Label>
               <Input type="text" 
               
                onChange={(e) => {
-                setName(e.target.value)
+                setName(e.target.value);
+                if(name.length>=10){alert('10글자이하!')};
                 console.log(name);
               }} placeholder="최대 10글자 까지!" value={name}></Input>
             </FormDiv>
@@ -390,7 +398,8 @@ function App() {
             <FormDiv>
               <Label>내용:</Label>
               <Textarea onChange={(e) => {
-                setContent(e.target.value)
+                setContent(e.target.value);
+                if(content.length>=100){alert('100글자이하!')};
                 console.log(content);
               }} placeholder="최대 100글자 까지!" value={content}></Textarea>
             </FormDiv>
