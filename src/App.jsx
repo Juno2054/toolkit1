@@ -239,6 +239,7 @@ export {
   TextArea,
   ConBoxTitle
 };
+//styled-components export 한것들
 
 function App() {
   const initialState=[
@@ -289,9 +290,29 @@ function App() {
     setHeaderClick2(false);
     setHeaderClick3(false);
     setHeaderClick4(false);
-  },[])
+  },[]);
 
   const headerClicks = [headerclick1, headerclick2, headerclick3, headerclick4];
+
+  const contextValue = {
+    list,
+    setList,
+    name,
+    setName,
+    content,
+    setContent,
+    postSelect,
+    setPostSelect,
+    headerclick1,
+    headerclick2,
+    headerclick3,
+    headerclick4,
+    setHeaderClick1,
+    setHeaderClick2,
+    setHeaderClick3,
+    setHeaderClick4,
+  };
+
 
   // function addlist() {
   //   let copy1 = [...name];
@@ -306,6 +327,7 @@ function App() {
   //   console.log(list);
   // }
   return (
+    <Context1.Provider value={contextValue}>
     <Container he={'100%'}>
     
       <Routes>
@@ -447,6 +469,7 @@ function App() {
       </Routes>
 
     </Container>
+    </Context1.Provider>
   );
 }
 

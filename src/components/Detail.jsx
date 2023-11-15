@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import React, { useState, useContext } from 'react'
+import { useParams ,Link} from 'react-router-dom';
 import { Container, Textarea } from '../App'
 import ContentBox from './ContentBox';
-import { Link } from 'react-router-dom';
 import { ULB,LIB,ListDiv,Pcon,RefBun,TextArea,ConBoxTitle} from '../App'
-function Detail({ list,setList }) {
+import { Context1 } from '../App';
+function Detail() {
   const { id } = useParams();
+  const { list, setList,  } = useContext(Context1);
   const selectedItem = list.find(item => item.id == id);
 
   const [editing, setEditing]=useState(false);

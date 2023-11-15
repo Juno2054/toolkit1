@@ -3,7 +3,8 @@ import { ULB,LIB,ListDiv,Pcon,ConBoxTitle} from '../App'
 import { Link } from 'react-router-dom';
 import { Context1 } from '../App';
 
-function ContentBox({list,postSelect,headerclick1, headerclick2, headerclick3, headerclick4,}) {
+function ContentBox() {
+const { list, postSelect, headerclick1,headerclick2,headerclick3,headerclick4 } = useContext(Context1);
 const filterList= list.filter(item => item.label === postSelect);
 
 useContext(Context1)
