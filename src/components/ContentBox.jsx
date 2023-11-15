@@ -1,35 +1,29 @@
 import React from 'react'
-import { ULB,LIB,ListDiv,Pcon} from '../App'
+import { ULB,LIB,ListDiv,Pcon,ConBoxTitle} from '../App'
 import { Link } from 'react-router-dom';
 function ContentBox({list,postSelect,headerclick1, headerclick2, headerclick3, headerclick4,}) {
 const filterList= list.filter(item => item.label === postSelect);
 
 
   return (
-    <ListDiv>
-                {headerclick1 && (
-        <div>
-         카리나
-        </div>
+    <ListDiv wd={'500px'}>
+     
+      {headerclick1 && (
+  <ConBoxTitle wd={'85%'} hg={'100%'} pd={'10px'}>카리나 방명록!</ConBoxTitle>
       )}
       {headerclick2 && (
-        <div>
-         윈터
-        </div>
+ <ConBoxTitle  wd={'85%'} hg={'100%'} pd={'10px'}>윈터 방명록!</ConBoxTitle>
       )}
       {headerclick3 && (
-        <div>
-         닝닝
-        </div>
+ <ConBoxTitle  wd={'85%'} hg={'100%'} pd={'10px'}>닝닝 방명록!</ConBoxTitle>
       )}
       {headerclick4 && (
-        <div>
-        지젤
-        </div>
+ <ConBoxTitle  wd={'85%'} hg={'100%'} pd={'10px'}>지젤 방명록!</ConBoxTitle>
       )}
+
     {filterList.map((list,i)=>(
    
-      <ULB >
+      <ULB wd={'500px'}>
         <LIB >
         <Link key={i} to={`/detail/${list.id}`}>
           <section style={{ display: 'flex' }}>
@@ -39,12 +33,18 @@ const filterList= list.filter(item => item.label === postSelect);
               height: "50px",
               borderRadius: "50%",
             }}>
-              <img src="https://w7.pngwing.com/pngs/710/71/png-transparent-profle-person-profile-user-circle-icons-icon-thumbnail.png"
+              
+             {/* 아바타가있으면 아바타이미지 넣고 아니면 기본이미지 보여주기  */}
+              <img src={list.avatar?
+              (list.avatar):("https://w7.pngwing.com/pngs/710/71/png-transparent-profle-person-profile-user-circle-icons-icon-thumbnail.png")}
                 alt="프로필이미지" style={{
                   width: "100%",
                   height: "100%%",
                   objectFit: "cover",
-                  borderRadius: "50"
+                  borderRadius: "50",
+                  border: "1px solid black",
+                  borderRadius:"30px",
+                  textAlign:"center",
                 }} />
             </figure>
             <div>
@@ -55,7 +55,7 @@ const filterList= list.filter(item => item.label === postSelect);
               <time></time>
             </div>
           </section>
-          <Pcon>{list.content}</Pcon>
+          <Pcon ws={'nowrap'}>{list.content}</Pcon>
           {/* <Pcon>{list.label}</Pcon> */}
           </Link>
         </LIB>

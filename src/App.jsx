@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import './App.css';
 import './reset.css';
 import ContentBox from "./components/ContentBox";
-
 import styled from 'styled-components';
 import Detail from "./components/Detail";
 import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import uuid4 from "uuid4";
+import fakeData from "./fakeData.json"
 
 
 // 
@@ -16,6 +16,10 @@ let Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url("https://img.freepik.com/free-vector/mobile-background-with-starry-sky-and-purple-tones_79603-550.jpg?w=740&t=st=1700034702~exp=1700035302~hmac=9c189a4a7062b5df46924dfa604e4661d67a73ea898c9f6372373329c1f43299");
+    background-size: cover;
+    width: 100%;
+    height: ${props=>props.he};
 `;
 let Header = styled.div`
     position: relative;
@@ -23,8 +27,19 @@ let Header = styled.div`
     background-color: green;
     background-size: 25%;
     width: 100%;
-    height: 300px;
+    height: 400px;
     margin-bottom: 20px;
+`
+let Pcon = styled.p`
+    margin-left: 70px;
+    background-color: rgb(37, 33, 33);
+    border-radius: 10px;
+    padding: 10px;
+    white-space: ${props=>props.ws};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: white;;
 `
 let H1 = styled.div`
   position: absolute;
@@ -33,7 +48,7 @@ let H1 = styled.div`
   transform: translateX(-50%);
   text-align: center;
   font-size: 50px;
-  color: snow;
+  color: black;
   min-width: 450px;
 `
 let ULT = styled.ul`
@@ -60,21 +75,30 @@ let LIT = styled.li`
     cursor: pointer;
     background-color: ${props=>props.bg };
     color: whitesmoke;
+    transition: all 0.6s;
 `;
 let ULB = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 500px;
-    background-color: black;
+    width: ${props=>props.wd};
+    height: ${props=>props.he};
+    background-color:#333333;
     padding: 20px;
     border-radius: 5px;
     margin: 0px auto;
+    border: 2px solid black;
+    transition: all 0.7s;
+    &:hover{
+      transform: scale(1.2);
+    }
+
     
 `
 let LIB = styled(Link)`
     text-decoration: none;
     color: white;;
+    
 li{
     display: flex;
     flex-direction: column;
@@ -82,7 +106,9 @@ li{
     border: 1px solid white;
     border-radius: 5px;
     cursor: pointer;
+    
     }
+
 `;
 let Form = styled.form`
    width: 500px;
@@ -90,6 +116,7 @@ let Form = styled.form`
     border-radius: 5px;
     margin-bottom: 20px;
     padding: 20px;
+    border: 2px solid white;
   
 `
 let FormDiv = styled.div`
@@ -112,41 +139,49 @@ let Textarea = styled.textarea`
     padding: 5px 10px;
 `
 let Button = styled.button`
-  background-color: rgb(0, 0, 0);
-    color: rgb(198, 187, 167);
+    background-color: rgb(0, 0, 0);
     font-size: 14px;
     padding: 5px 10px;
     cursor: pointer;
     user-select: none;
-    background-color: black;
+    background-color: #005e74;
     text-align: right;
     color: white;
+    transition: all 1s;
+    &:hover{
+      background-color: #ff79b0;
+
+    }
 `
 let ListDiv = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 500px;
-    background-color: black;
+    width: ${props=>props.wd};
+    background-color: #5c5c5c;
     padding: 20px;
     border-radius: 5px;
     margin: 0px auto;
+    border: 2px solid white;
+    transition: all 0.6s;
+
 `
-let Pcon = styled.p`
-    margin-left: 70px;
-    background-color: rgb(37, 33, 33);
-    border-radius: 10px;
-    padding: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-decoration: none;
-    color: white;;
-`
+
 let RefBun = styled.button`
   background-color: ${props=>props.bg };
-  margin: 10px;
-  padding: 5px 5px 5px 5px;
+  font-size: 14px;
+    padding: 5px 10px;
+    cursor: pointer;
+    user-select: none;
+    text-align: right;
+    color: white;
+    transition: all 0.5s;
+    margin: 10px;
+    &:hover{
+      background-color: #ff2b0f;
+
+    }
+
 `
 let TextArea= styled.textarea`
     width: 95%;
@@ -158,6 +193,24 @@ let TextArea= styled.textarea`
     text-overflow: ellipsis;
     text-decoration: none;
     color: white;;
+`
+let MainBgimg= styled.img`
+  background-image:url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNMnVJ%2Fbtq9TEBIGaj%2F82Thh6CkAB5Thiyoy8pZ51%2Fimg.png');
+  width:  100%;
+  height: 100%;
+  background-position: 0px -30px;
+   `
+let ConBoxTitle= styled.div`
+  width: ${props=>props.wd};
+  height: ${props=>props.hg};
+  padding: ${props=>props.pd};
+  margin: 10px 30px;
+  text-align  :center ;
+  font-size: 30px;
+  color: white;
+  border: 3px solid white;
+
+  
 `
 // 위에는 styled-components
 export {
@@ -177,41 +230,42 @@ export {
   ListDiv,
   Pcon,
   RefBun,
-  TextArea
+  TextArea,
+  ConBoxTitle
 };
 
 function App() {
   const initialState=[
-    {
-      id: uuid4(),
-      name: "테스트 제목 1",
-      content: "테스트 내용 1",
-      isDone: true,
-      label:'카리나',
-    },
-    {
-      id: uuid4(),
-      name: "테스트 제목 1",
-      content: "테스트 내용 1",
-      isDone: true,
-      label:'윈터',
-    },
-    {
-      id: uuid4(),
-      name: "테스트 제목 1",
-      content: "테스트 내용 1",
-      isDone: true,
-      label:'닝닝',
-    },
-    {
-      id: uuid4(),
-      name: "테스트 제목 1",
-      content: "테스트 내용 1",
-      isDone: true,
-      label:'지젤',
-    }
+    // {
+    //   id: uuid4(),
+    //   name: "테스트 제목 1",
+    //   content: "테스트 내용 1",
+    //   isDone: true,
+    //   label:'카리나',
+    // },
+    // {
+    //   id: uuid4(),
+    //   name: "테스트 제목 1",
+    //   content: "테스트 내용 1",
+    //   isDone: true,
+    //   label:'윈터',
+    // },
+    // {
+    //   id: uuid4(),
+    //   name: "테스트 제목 1",
+    //   content: "테스트 내용 1",
+    //   isDone: true,
+    //   label:'닝닝',
+    // },
+    // {
+    //   id: uuid4(),
+    //   name: "테스트 제목 1",
+    //   content: "테스트 내용 1",
+    //   isDone: true,
+    //   label:'지젤',
+    // }
   ]
-  const [list,setList]=useState(initialState);
+  const [list,setList]=useState(fakeData);
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
   const [postSelect,setPostSelect]=useState('');
@@ -219,9 +273,17 @@ function App() {
 
 
   let [headerclick1, setHeaderClick1] = useState(false);
-  let [headerclick2, setHeaderClick2] = useState(true);
+  let [headerclick2, setHeaderClick2] = useState(false);
   let [headerclick3, setHeaderClick3] = useState(false);
   let [headerclick4, setHeaderClick4] = useState(false);
+  //처음에 안불러와져서 다 false로 해둔후 페이지 로딩되면 카리나만 true로 바꿈
+  useEffect(()=>{
+    setHeaderClick1(true);
+    setPostSelect("카리나");
+    setHeaderClick2(false);
+    setHeaderClick3(false);
+    setHeaderClick4(false);
+  },[])
 
   const headerClicks = [headerclick1, headerclick2, headerclick3, headerclick4];
 
@@ -238,15 +300,26 @@ function App() {
   //   console.log(list);
   // }
   return (
-    <Container>
+    <Container he={'100%'}>
     
       <Routes>
         {/* 메인페이지 */}
+        <Route path="*" element={     <>
+    <Link to='/'><RefBun bg={'green'}>되돌아가기</RefBun></Link>
+    <h1 style={{
+    color:"white",
+    fontSize:"50px",
+   }}> 몰?루? 는 페이지임 돌아가죠 ??</h1>
+    <img style={{width :"30%",}}
+    src='https://i.namu.wiki/i/dE4-V5zTsBBRqHJcjBc_H-uPBBJ8bKa23ecQ-L_uhelHzA6MADc4KrmmYgqPaSfIPiLWO2rm3Zu5qu_OCsEEqy7YRA_2W0yAYEhikRQAiAzlYR5bXPzbafHFimy7W2V8-FBHGjgKJWgL9hvc0TNlTw.webp'></img>
+
+    </> } />
         <Route path="/" element={<>
           <Header>
-            <H1>어쩌구 저쩌구 아이돌 </H1>
+          <MainBgimg></MainBgimg>
+            <H1 ></H1>
             <ULT>
-              <LIT bg={headerclick1==true ? 'red':'blue'} onClick={() => {
+              <LIT bg={headerclick1==true ? '#ff79b0':'#005e74'} onClick={() => {
                setHeaderClick1(prevState => !prevState);
                setPostSelect('카리나')
                setHeaderClick2(false);
@@ -255,7 +328,7 @@ function App() {
 
               }}>카리나</LIT>
 
-              <LIT bg={headerclick2==true ? 'red':'blue'}onClick={() => {
+              <LIT bg={headerclick2==true ? '#ff79b0':'#005e74'}onClick={() => {
                 setHeaderClick2(prevState => !prevState);
                 setPostSelect('윈터')
                 setHeaderClick1(false);
@@ -263,7 +336,7 @@ function App() {
                 setHeaderClick4(false);
               }}>윈터</LIT>
 
-              <LIT bg={headerclick3==true ? 'red':'blue'}onClick={() => {
+              <LIT bg={headerclick3==true ? '#ff79b0':'#005e74'}onClick={() => {
                 setHeaderClick3(prevState => !prevState);
                 setPostSelect('닝닝')
                 setHeaderClick1(false);
@@ -271,7 +344,7 @@ function App() {
                 setHeaderClick4(false);
               }}>닝닝</LIT>
 
-              <LIT bg={headerclick4==true ? 'red':'blue'} onClick={() => {
+              <LIT bg={headerclick4==true ? '#ff79b0':'#005e74'} onClick={() => {
                setHeaderClick4(prevState => !prevState);
                setPostSelect('지젤')
                setHeaderClick1(false);
@@ -282,6 +355,10 @@ function App() {
           </Header>
           <Form onSubmit={function(e){
             e.preventDefault();
+            if(name.length<3){alert(' 닉네임에 3글자이상은 적어줘요')
+          return}
+            else if(content.length<10){alert(' 내용에 10글자이상은 적어줘요')
+          return}
             const newContentsList={
               id:uuid4(),
               name,
@@ -312,7 +389,9 @@ function App() {
 
             <FormDiv>
               <Label>누구한테?</Label>
-              <select 
+              <select style={{transition:"all 0.5s",
+            
+                                  }}
               onChange={(e)=>{setPostSelect(e.target.value)}}
             value={postSelect}>
                 <option value="카리나">카리나</option>
@@ -323,7 +402,8 @@ function App() {
             </FormDiv>
             <FormDiv style={{ justifyContent: "flex-end" }}>
               <Button type="submit">등록하기!</Button>
-               <Link to='/detail'>디테일</Link>
+               {/* 디테일페이지 확인용 <Link to='/detail'>디테일</Link> */}
+               
             </FormDiv>
           </Form>
           {/* {headerclick1?(
