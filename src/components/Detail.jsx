@@ -100,7 +100,10 @@ function Detail({ list,setList }) {
           <div style={{display:"none"}}>
           <ContentBox list={list}/>
           </div>
-          <div>
+          <div style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+          }}>
               <RefBun bg={'#ff79b0'} onClick={deleteDetail}>삭제</RefBun>
               {editing==true?(
               <>

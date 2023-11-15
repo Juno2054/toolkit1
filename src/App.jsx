@@ -16,7 +16,7 @@ let Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url("https://img.freepik.com/free-vector/mobile-background-with-starry-sky-and-purple-tones_79603-550.jpg?w=740&t=st=1700034702~exp=1700035302~hmac=9c189a4a7062b5df46924dfa604e4661d67a73ea898c9f6372373329c1f43299");
+    background-image: url("https://i.pinimg.com/originals/19/23/32/192332eebcc51b403e5ad37c94ddc991.jpg");
     background-size: cover;
     width: 100%;
     height: ${props=>props.he};
@@ -31,7 +31,7 @@ let Header = styled.div`
     margin-bottom: 20px;
 `
 let Pcon = styled.p`
-    margin-left: 70px;
+    margin-left: 50px;
     background-color: rgb(37, 33, 33);
     border-radius: 10px;
     padding: 10px;
@@ -40,6 +40,7 @@ let Pcon = styled.p`
     text-overflow: ellipsis;
     text-decoration: none;
     color: white;;
+    line-height: 2.1;
 `
 let H1 = styled.div`
   position: absolute;
@@ -63,6 +64,7 @@ let ULT = styled.ul`
     list-style: none;
     padding: 15px;
     width: 500px;
+
 `
 let LIT = styled.li`
      font-size: 20px;
@@ -75,7 +77,11 @@ let LIT = styled.li`
     cursor: pointer;
     background-color: ${props=>props.bg };
     color: whitesmoke;
-    transition: all 0.6s;
+    transition: all 0.5s;
+    &:hover{
+    transform: scale(1.2);
+    color: #005e74
+    }
 `;
 let ULB = styled.ul`
     display: flex;
@@ -83,7 +89,7 @@ let ULB = styled.ul`
     gap: 20px;
     width: ${props=>props.wd};
     height: ${props=>props.he};
-    background-color:#333333;
+    background-color:transparent;
     padding: 20px;
     border-radius: 5px;
     margin: 0px auto;
@@ -91,6 +97,7 @@ let ULB = styled.ul`
     transition: all 0.7s;
     &:hover{
       transform: scale(1.2);
+      background-color:#333333;
     }
 
     
@@ -112,7 +119,7 @@ li{
 `;
 let Form = styled.form`
    width: 500px;
-    background-color: gray;
+    background-color: transparent;
     border-radius: 5px;
     margin-bottom: 20px;
     padding: 20px;
@@ -144,7 +151,7 @@ let Button = styled.button`
     padding: 5px 10px;
     cursor: pointer;
     user-select: none;
-    background-color: #005e74;
+    background-color:transparent;
     text-align: right;
     color: white;
     transition: all 1s;
@@ -158,7 +165,7 @@ let ListDiv = styled.div`
     flex-direction: column;
     gap: 20px;
     width: ${props=>props.wd};
-    background-color: #5c5c5c;
+    background-color: transparent;
     padding: 20px;
     border-radius: 5px;
     margin: 0px auto;
@@ -193,6 +200,7 @@ let TextArea= styled.textarea`
     text-overflow: ellipsis;
     text-decoration: none;
     color: white;;
+    
 `
 let MainBgimg= styled.img`
   background-image:url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNMnVJ%2Fbtq9TEBIGaj%2F82Thh6CkAB5Thiyoy8pZ51%2Fimg.png');
@@ -319,7 +327,7 @@ function App() {
           <MainBgimg></MainBgimg>
             <H1 ></H1>
             <ULT>
-              <LIT bg={headerclick1==true ? '#ff79b0':'#005e74'} onClick={() => {
+              <LIT bg={headerclick1==true ? '#ff79b0':'transparent'} onClick={() => {
                setHeaderClick1(prevState => !prevState);
                setPostSelect('카리나')
                setHeaderClick2(false);
@@ -328,7 +336,7 @@ function App() {
 
               }}>카리나</LIT>
 
-              <LIT bg={headerclick2==true ? '#ff79b0':'#005e74'}onClick={() => {
+              <LIT bg={headerclick2==true ? '#ff79b0':'transparent'}onClick={() => {
                 setHeaderClick2(prevState => !prevState);
                 setPostSelect('윈터')
                 setHeaderClick1(false);
@@ -336,7 +344,7 @@ function App() {
                 setHeaderClick4(false);
               }}>윈터</LIT>
 
-              <LIT bg={headerclick3==true ? '#ff79b0':'#005e74'}onClick={() => {
+              <LIT bg={headerclick3==true ? '#ff79b0':'transparent'}onClick={() => {
                 setHeaderClick3(prevState => !prevState);
                 setPostSelect('닝닝')
                 setHeaderClick1(false);
@@ -344,7 +352,7 @@ function App() {
                 setHeaderClick4(false);
               }}>닝닝</LIT>
 
-              <LIT bg={headerclick4==true ? '#ff79b0':'#005e74'} onClick={() => {
+              <LIT bg={headerclick4==true ? '#ff79b0':'transparent'} onClick={() => {
                setHeaderClick4(prevState => !prevState);
                setPostSelect('지젤')
                setHeaderClick1(false);
