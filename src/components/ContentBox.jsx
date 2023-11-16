@@ -1,13 +1,20 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { ULB,LIB,ListDiv,Pcon,ConBoxTitle} from '../App'
 import { Link } from 'react-router-dom';
-import { Context1 } from '../App';
+import { useDispatch,useSelector } from 'react-redux';
+import { updateList } from '../store';
 
-function ContentBox() {
-const { list, postSelect, headerclick1,headerclick2,headerclick3,headerclick4 } = useContext(Context1);
-const filterList= list.filter(item => item.label === postSelect);
 
-useContext(Context1)
+function ContentBox({headerclick1,headerclick2,headerclick3,headerclick4}) {
+const appState = useSelector((state) => state.app);
+const dispatch=useDispatch();
+const filterList = appState.list.filter((item) => item.label === appState.postSelect);
+
+// const { list, postSelect,  } = useSelector((state)=>state.app);
+
+// const filterList= list.filter(item => item.label === postSelect);
+
+// useContext(Context1)
 
   return (
     <ListDiv wd={'500px'}>

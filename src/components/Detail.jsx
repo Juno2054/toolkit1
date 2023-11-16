@@ -1,13 +1,18 @@
-import React, { useState, useContext } from 'react'
+import React, { useState,  } from 'react'
+import { useDispatch,useSelector } from "react-redux";
 import { useParams ,Link} from 'react-router-dom';
-import { Container, Textarea } from '../App'
+import { Container,  } from '../App'
 import ContentBox from './ContentBox';
 import { ULB,LIB,ListDiv,Pcon,RefBun,TextArea,ConBoxTitle} from '../App'
-import { Context1 } from '../App';
+// import { Context1 } from '../App';
+import {  updateList,   } from "../store";
+
+
 function Detail() {
   const { id } = useParams();
-  const { list, setList,  } = useContext(Context1);
-  const selectedItem = list.find(item => item.id == id);
+  const appState= useSelector((state)=>state.app);
+  const dispatch = useDispatch();
+  const selectedItem = appState.list.find((item) => item.id === id);
 
   const [editing, setEditing]=useState(false);
   const [editedContent, setEditedContent] = useState(selectedItem?selectedItem.content:'');
@@ -18,8 +23,12 @@ function Detail() {
       
     <>
     <Link to='/'><RefBun bg={'green'}>되돌아가기</RefBun></Link>
-    <img src='https://i.namu.wiki/i/dE4-V5zTsBBRqHJcjBc_H-uPBBJ8bKa23ecQ-L_uhelHzA6MADc4KrmmYgqPaSfIPiLWO2rm3Zu5qu_OCsEEqy7YRA_2W0yAYEhikRQAiAzlYR5bXPzbafHFimy7W2V8-FBHGjgKJWgL9hvc0TNlTw.webp'></img>
-    <p>몰?루?</p>
+    <h1 style={{
+    color:"white",
+    fontSize:"50px",
+   }}> 몰?루? 는 페이지임 돌아가죠 ??</h1>
+    <img style={{width :"30%",}}
+    src='https://i.namu.wiki/i/dE4-V5zTsBBRqHJcjBc_H-uPBBJ8bKa23ecQ-L_uhelHzA6MADc4KrmmYgqPaSfIPiLWO2rm3Zu5qu_OCsEEqy7YRA_2W0yAYEhikRQAiAzlYR5bXPzbafHFimy7W2V8-FBHGjgKJWgL9hvc0TNlTw.webp'></img>
     </>)
 }
 
@@ -29,8 +38,8 @@ function Detail() {
     const showId = window.confirm('진짜삭제할거에요?');
     
     if(showId){
-      const updataList =  list.filter(item => item.id !== id);
-      setList(updataList);
+      const updatedList  = appState.list.filter(item => item.id !== id);
+      dispatch(updateList(updatedList));
     }
     window.location.href='/';
   };
@@ -43,9 +52,9 @@ function Detail() {
       alert('변경된게 없네요?')
       
     }
-    const updataList= list.map(item=> item.id===id?{
+    const updatedList = appState.list.map(item=> item.id===id?{
       ...item,content:editedContent}:item);
-      setList(updataList);
+      dispatch(updateList(updatedList));
       setEditing(false);
   }
   const canceEdit= ()=>{
@@ -98,7 +107,7 @@ function Detail() {
           )}
          
           <div style={{display:"none"}}>
-          <ContentBox list={list}/>
+          <ContentBox list={appState.list}/>
           </div>
           <div style={{
                 display: 'flex',

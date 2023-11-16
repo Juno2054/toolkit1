@@ -1,4 +1,6 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, {  useState, useEffect } from "react";
+import { useDispatch,useSelector } from "react-redux";
+import { updateContent, updateList, updateName, updatePostSelect } from "./store";
 import './App.css';
 import './reset.css';
 import ContentBox from "./components/ContentBox";
@@ -7,7 +9,10 @@ import Detail from "./components/Detail";
 import { Routes, Route, Link } from "react-router-dom";
 import uuid4 from "uuid4";
 import fakeData from "./fakeData.json"
-export const Context1 =createContext();
+
+
+// export const Context1 =createContext();
+
 // 
 // styled-components 사용 부분
 let Container = styled.div`
@@ -201,10 +206,11 @@ let TextArea= styled.textarea`
     
 `
 let MainBgimg= styled.img`
-  background-image:url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNMnVJ%2Fbtq9TEBIGaj%2F82Thh6CkAB5Thiyoy8pZ51%2Fimg.png');
+  background-image:url('https://pickcon.co.kr/site/data/img_dir/2021/05/10/2021051080072_0.jpg');
   width:  100%;
   height: 100%;
-  background-position: 0px -30px;
+  background-size: cover;
+  
    `
 let ConBoxTitle= styled.div`
   width: ${props=>props.wd};
@@ -242,41 +248,12 @@ export {
 //styled-components export 한것들
 
 function App() {
-  const initialState=[
-    // {
-    //   id: uuid4(),
-    //   name: "테스트 제목 1",
-    //   content: "테스트 내용 1",
-    //   isDone: true,
-    //   label:'카리나',
-    // },
-    // {
-    //   id: uuid4(),
-    //   name: "테스트 제목 1",
-    //   content: "테스트 내용 1",
-    //   isDone: true,
-    //   label:'윈터',
-    // },
-    // {
-    //   id: uuid4(),
-    //   name: "테스트 제목 1",
-    //   content: "테스트 내용 1",
-    //   isDone: true,
-    //   label:'닝닝',
-    // },
-    // {
-    //   id: uuid4(),
-    //   name: "테스트 제목 1",
-    //   content: "테스트 내용 1",
-    //   isDone: true,
-    //   label:'지젤',
-    // }
-  ]
   const [list,setList]=useState(fakeData);
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
   const [postSelect,setPostSelect]=useState('');
-
+  const dispatch = useDispatch();
+  const appState= useSelector((state)=>state.app);
 
 
   let [headerclick1, setHeaderClick1] = useState(false);
@@ -294,24 +271,24 @@ function App() {
 
   const headerClicks = [headerclick1, headerclick2, headerclick3, headerclick4];
 
-  const contextValue = {
-    list,
-    setList,
-    name,
-    setName,
-    content,
-    setContent,
-    postSelect,
-    setPostSelect,
-    headerclick1,
-    headerclick2,
-    headerclick3,
-    headerclick4,
-    setHeaderClick1,
-    setHeaderClick2,
-    setHeaderClick3,
-    setHeaderClick4,
-  };
+  // const contextValue = {
+  //   list,
+  //   setList,
+  //   name,
+  //   setName,
+  //   content,
+  //   setContent,
+  //   postSelect,
+  //   setPostSelect,
+  //   headerclick1,
+  //   headerclick2,
+  //   headerclick3,
+  //   headerclick4,
+  //   setHeaderClick1,
+  //   setHeaderClick2,
+  //   setHeaderClick3,
+  //   setHeaderClick4,
+  // };
 
 
   // function addlist() {
@@ -327,7 +304,7 @@ function App() {
   //   console.log(list);
   // }
   return (
-    <Context1.Provider value={contextValue}>
+    // <Context1.Provider store={store}>
     <Container he={'100%'}>
     
       <Routes>
@@ -349,7 +326,8 @@ function App() {
             <ULT>
               <LIT bg={headerclick1==true ? '#ff79b0':'transparent'} onClick={() => {
                setHeaderClick1(prevState => !prevState);
-               setPostSelect('카리나')
+               setPostSelect('카리나');
+               dispatch(updatePostSelect('카리나'));
                setHeaderClick2(false);
                setHeaderClick3(false);
                setHeaderClick4(false);
@@ -358,7 +336,8 @@ function App() {
 
               <LIT bg={headerclick2==true ? '#ff79b0':'transparent'}onClick={() => {
                 setHeaderClick2(prevState => !prevState);
-                setPostSelect('윈터')
+                setPostSelect('윈터');
+                dispatch(updatePostSelect('윈터'));
                 setHeaderClick1(false);
                 setHeaderClick3(false);
                 setHeaderClick4(false);
@@ -366,7 +345,8 @@ function App() {
 
               <LIT bg={headerclick3==true ? '#ff79b0':'transparent'}onClick={() => {
                 setHeaderClick3(prevState => !prevState);
-                setPostSelect('닝닝')
+                setPostSelect('닝닝');
+                dispatch(updatePostSelect('닝닝'));
                 setHeaderClick1(false);
                 setHeaderClick2(false);
                 setHeaderClick4(false);
@@ -374,7 +354,8 @@ function App() {
 
               <LIT bg={headerclick4==true ? '#ff79b0':'transparent'} onClick={() => {
                setHeaderClick4(prevState => !prevState);
-               setPostSelect('지젤')
+               setPostSelect('지젤');
+               dispatch(updatePostSelect('지젤'));
                setHeaderClick1(false);
                setHeaderClick2(false);
                setHeaderClick3(false);
@@ -383,23 +364,28 @@ function App() {
           </Header>
           <Form onSubmit={function(e){
             e.preventDefault();
-            if(name.length<3){alert(' 닉네임에 3글자이상은 적어줘요');
+            if(appState.name.length<3){alert(' 닉네임에 3글자이상은 적어줘요');
           return}
-            else if(content.length<10){alert(' 내용에 10글자이상은 적어줘요');
+            else if(appState.content.length<10){alert(' 내용에 10글자이상은 적어줘요');
           return}
-          if(name.length>10){alert(' 10글자 이하로써줘요!!');
+          if(appState.name.length>10){alert(' 10글자 이하로써줘요!!');
           return}
-            else if(content.length>100){alert(' 100글자 이하로 써줘요!!');
+            else if(appState.content.length>100){alert(' 100글자 이하로 써줘요!!');
           return}
 
             const newContentsList={
               id:uuid4(),
-              name,
-              content,
-              isDone:false,
-              label:postSelect,
+              name:appState.name,
+              content:appState.content,
+              // label:appState.postSelect,
+              postSelect:appState.postSelect
             };
+           
+            dispatch(updateList([...list,newContentsList]));
             setList([...list,newContentsList]);
+            // dispatch(updateName(''));
+            // dispatch(updateContent(''));
+            console.log(updateList);
             // console.log(list)
             setName('');
             setContent('');
@@ -409,18 +395,21 @@ function App() {
               <Input type="text" 
               
                onChange={(e) => {
+                dispatch(updateName(e.target.value));
                 setName(e.target.value);
                 if(name.length>=10){alert('10글자이하!')};
-                console.log(name);
+                // console.log(name);
               }} placeholder="최대 10글자 까지!" value={name}></Input>
             </FormDiv>
 {/* input */}
             <FormDiv>
               <Label>내용:</Label>
               <Textarea onChange={(e) => {
+                dispatch(updateContent(e.target.value));
                 setContent(e.target.value);
+                
                 if(content.length>=100){alert('100글자이하!')};
-                console.log(content);
+                // console.log(content);
               }} placeholder="최대 100글자 까지!" value={content}></Textarea>
             </FormDiv>
 
@@ -429,7 +418,11 @@ function App() {
               <select style={{transition:"all 0.5s",
             
                                   }}
-              onChange={(e)=>{setPostSelect(e.target.value)}}
+              onChange={(e)=>{
+                dispatch(updatePostSelect(e.target.value))
+                setPostSelect(e.target.value)
+                }}
+                
             value={postSelect}>
                 <option value="카리나">카리나</option>
                 <option value="윈터">윈터</option>
@@ -453,9 +446,9 @@ function App() {
           click ? (
             <ContentBox
               key={index}
-              list={list}
-              setList={setList}
-              postSelect={postSelect}
+              list={appState.list}
+              setList={(newList) => dispatch(updateList(newList))}
+              postSelect={(appState.postSelect)}
               headerclick1={index === 0}
               headerclick2={index === 1}
               headerclick3={index === 2}
@@ -469,7 +462,7 @@ function App() {
       </Routes>
 
     </Container>
-    </Context1.Provider>
+    // </Context1.Provider>
   );
 }
 
