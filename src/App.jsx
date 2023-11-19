@@ -6,7 +6,7 @@ import './reset.css';
 import ContentBox from "./components/ContentBox";
 import styled from 'styled-components';
 import Detail from "./components/Detail";
-import { Routes, Route, Link } from "react-router-dom";
+import {Routes, Route, Link } from "react-router-dom";
 import uuid4 from "uuid4";
 import fakeData from "./fakeData.json"
 import fakeData2 from"./fakeData2.json"
