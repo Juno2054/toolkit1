@@ -1,14 +1,15 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
+import fakeData2 from "./fakeData2.json";
 
 const initialState = {
   name: '',
   content: '',
   postSelect: '',
-  list: [],
-  label:'',
-  id:'',
-
+  list: [...fakeData2],
+  label:'카리나',
+  id:'1',
 };
+// list에 페이크 데이터 넣어두기 
 
 const appSlice= createSlice({
   name:'app',
@@ -16,6 +17,7 @@ const appSlice= createSlice({
   reducers: { 
     updateName:(state,action)=>{
       state.name = action.payload;
+
     },
     updateContent:(state,action)=>{
       state.content = action.payload;
@@ -25,15 +27,16 @@ const appSlice= createSlice({
     },
     updateList:(state,action)=>{
       state.list = action.payload;
-     console.log(state.list);
+    //  console.log('스토어',state.list);
     },
   },
 }) ;
 
-export const {updateName,updateContent,updatePostSelect,updateList}=appSlice.actions;
+export const {updateName,updateContent,updatePostSelect,updateList,updateLocalDate}=appSlice.actions;
 
 export default configureStore({
   reducer:{
     app: appSlice.reducer,
+
   },
 });

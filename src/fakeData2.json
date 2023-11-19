@@ -1,0 +1,82 @@
+
+
+[
+    {
+      "createdAt": "2023-11-03T02:07:09.423Z",
+      "name": "카리나",
+      "avatar":"https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRFXoQLPfkE4TclSsDpsX2sDYiY5z2p9LpMEQxpUeEOb1ISiHU3",
+      "content": "MY와 함께 있는 시간은 무엇보다 행복하지.종종 시간이 멈췄으면~ 하고 바랄 때가 있어.",
+      "label": "카리나",
+      "id": "1"
+    },
+    {
+      "createdAt": "2023-11-03T02:07:09.423Z",
+      "name": "으앙악",
+      "content": "로켓펀치 복각좀 ",
+      "label": "카리나",
+      "id": "1"
+    },
+    {
+      "createdAt": "2023-11-02T23:13:18.491Z",
+      "name": "지젤",
+      "avatar": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQvbeuV4LZCkpx0OCA4M8q52pf11gwApp-r2uabuTXUfUTHO5qI",
+      "content": "여깄던 딸기? 내가 먹었는데..?사실 농담이야~ 여기 숨겨 놨지~",
+      "label": "지젤",
+      "id": "2"
+    },
+    {
+      "createdAt": "2023-11-02T11:25:37.026Z",
+      "name": "윈터",
+      "avatar": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSSJgjln6TGpXs1JT_6kAM4VzltsU5ou7xScTT6Fyw061JWYP5i",
+      "content": "왜 이렇게 기운이 없어! 내가 힘 날때까지 옆에서 응원해줄까? 나 응원 완전 잘 하거든~!",
+      "label": "윈터",
+      "id": "3"
+    },
+    {
+      "createdAt": "2023-11-02T16:06:34.150Z",
+      "name": "닝닝",
+      "avatar": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRkKzOXq4sRA42CteosbRwxKWSYjlgzEccpgzlnx5es2CfuMNwC",
+      "content": "역시 캠핑할 때는 마시멜로우에 핫초코를 먹어 줘야해.마음까지 따뜻해지는 것 같아.",
+      "label": "닝닝",
+      "id": "4"
+    },
+    {
+      "createdAt": "2023-11-02T16:06:34.150Z",
+      "name": "닝닝",
+      "avatar": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRkKzOXq4sRA42CteosbRwxKWSYjlgzEccpgzlnx5es2CfuMNwC",
+      "content": "똑같은건 재미없어 보여줄게 단수메 해킹 해줄게 마이스타일",
+      "label": "닝닝",
+      "id": "4"
+    },
+    {
+      "createdAt": "2023-11-02T16:06:34.150Z",
+      "name": "지젤",
+      "avatar": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQvbeuV4LZCkpx0OCA4M8q52pf11gwApp-r2uabuTXUfUTHO5qI",
+      "content": "마이 턶...",
+      "label": "닝닝",
+      "id": "4"
+    },
+    {
+      "createdAt": "2023-11-03T05:40:17.575Z",
+      "name": "에스파 팬 ",
+      "avatar": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTMRSq8FfpVZES7ye3prUmXNQFdotuBAXQlp4Haeu9QlVlEarLs",
+      "content": "와 카리나 ! 와! ",
+      "label": "카리나",
+      "id": "5"
+    },
+    {
+      "createdAt": "2023-11-02T16:06:34.150Z",
+      "name": "지젤",
+      "avatar": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQvbeuV4LZCkpx0OCA4M8q52pf11gwApp-r2uabuTXUfUTHO5qI",
+      "content": "마이 턶... 단수메 해킹해줄겖...",
+      "label": "윈터",
+      "id": "4"
+    },{
+    "createdAt": "2023-11-02T11:25:37.026Z",
+    "name": "윈터",
+    "avatar": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSSJgjln6TGpXs1JT_6kAM4VzltsU5ou7xScTT6Fyw061JWYP5i",
+    "content": "아이스크림 먹을래? 싫다고? 흠... 그럼 빵은 어때?",
+    "label": "지젤",
+    "id": "3"
+  }
+  ]

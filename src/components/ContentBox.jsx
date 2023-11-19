@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ULB,LIB,ListDiv,Pcon,ConBoxTitle} from '../App'
 import { Link } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
@@ -9,12 +9,19 @@ function ContentBox({headerclick1,headerclick2,headerclick3,headerclick4}) {
 const appState = useSelector((state) => state.app);
 const dispatch=useDispatch();
 const filterList = appState.list.filter((item) => item.label === appState.postSelect);
-
+const [isLoad,setLoad]= useState(false);
 // const { list, postSelect,  } = useSelector((state)=>state.app);
-
 // const filterList= list.filter(item => item.label === postSelect);
-
 // useContext(Context1)
+// useEffect(()=>{
+//   if(appState.list>0){
+//     setLoad(true);
+//   }
+// },[appState.list]);
+
+// if(!isLoad){
+//   return null;
+// }
 
   return (
     <ListDiv wd={'500px'}>
@@ -36,7 +43,7 @@ const filterList = appState.list.filter((item) => item.label === appState.postSe
    
       <ULB wd={'500px'}>
         <LIB >
-        <Link key={i} to={`/detail/${list.id}`}>
+        <Link style={{ textDecoration: "none",}} key={i} to={`/detail/${list.id}`}>
           <section style={{ display: 'flex' }}>
             <figure style={{
               marginRight: "20px",

@@ -1,17 +1,22 @@
 import React, { useState,  } from 'react'
 import { useDispatch,useSelector } from "react-redux";
-import { useParams ,Link} from 'react-router-dom';
+import { useParams ,Link, useNavigate,  } from 'react-router-dom';
 import { Container,  } from '../App'
 import ContentBox from './ContentBox';
 import { ULB,LIB,ListDiv,Pcon,RefBun,TextArea,ConBoxTitle} from '../App'
 // import { Context1 } from '../App';
 import {  updateList,   } from "../store";
 
+ 
+
+
 
 function Detail() {
+  
   const { id } = useParams();
   const appState= useSelector((state)=>state.app);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const selectedItem = appState.list.find((item) => item.id === id);
 
   const [editing, setEditing]=useState(false);
@@ -34,14 +39,21 @@ function Detail() {
 
 
 
-  const deleteDetail =()=>{
+
+  const deleteDetail = async()=>{
     const showId = window.confirm('진짜삭제할거에요?');
     
     if(showId){
+
       const updatedList  = appState.list.filter(item => item.id !== id);
+      
       dispatch(updateList(updatedList));
+      navigate(-1);
+
+      
     }
-    window.location.href='/';
+  
+
   };
 
   const editDetail=()=>{

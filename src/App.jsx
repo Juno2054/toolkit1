@@ -1,6 +1,6 @@
 import React, {  useState, useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
-import { updateContent, updateList, updateName, updatePostSelect } from "./store";
+import { updateContent, updateList, updateName, updatePostSelect ,updateLocalDate} from "./store";
 import './App.css';
 import './reset.css';
 import ContentBox from "./components/ContentBox";
@@ -9,6 +9,8 @@ import Detail from "./components/Detail";
 import { Routes, Route, Link } from "react-router-dom";
 import uuid4 from "uuid4";
 import fakeData from "./fakeData.json"
+import fakeData2 from"./fakeData2.json"
+
 
 
 // export const Context1 =createContext();
@@ -23,6 +25,11 @@ let Container = styled.div`
     background-size: cover;
     width: 100%;
     height: ${props=>props.he};
+    max-width: 2000px;
+    min-width: 500px;
+    margin-left:auto;
+    margin-right: auto;
+    
 `;
 let Header = styled.div`
     position: relative;
@@ -248,26 +255,38 @@ export {
 //styled-components export 한것들
 
 function App() {
-  const [list,setList]=useState(fakeData);
+  const [list,setList]=useState([]);
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
   const [postSelect,setPostSelect]=useState('');
+
   const dispatch = useDispatch();
   const appState= useSelector((state)=>state.app);
+  // const listLocalStorage=useSelector((state)=>state.local);
 
 
   let [headerclick1, setHeaderClick1] = useState(false);
   let [headerclick2, setHeaderClick2] = useState(false);
   let [headerclick3, setHeaderClick3] = useState(false);
   let [headerclick4, setHeaderClick4] = useState(false);
-  //처음에 안불러와져서 다 false로 해둔후 페이지 로딩되면 카리나만 true로 바꿈
+//로딩때 데이터를 안가져와서 데이터도 가져오게함 
+
+// useEffect(()=>{
+//   setList(['']);
+//   return()=>{
+//     setList([]);
+//     dispatch(updateList([]));
+//   }
+// },[])
+
   useEffect(()=>{
+    // dispatch(updateLocalDate([fakeData2]));
+    // dispatch(updateList([...list]));
+    dispatch(updatePostSelect('카리나'));
     setHeaderClick1(true);
-    setPostSelect("카리나");
-    setHeaderClick2(false);
-    setHeaderClick3(false);
-    setHeaderClick4(false);
   },[]);
+    //처음에 안불러와져서 다 false로 해둔후 페이지 로딩되면 카리나만 true로 바꿈
+
 
   const headerClicks = [headerclick1, headerclick2, headerclick3, headerclick4];
 
@@ -324,6 +343,7 @@ function App() {
           <MainBgimg></MainBgimg>
             <H1 ></H1>
             <ULT>
+              {/* //상단 리스트 */}
               <LIT bg={headerclick1==true ? '#ff79b0':'transparent'} onClick={() => {
                setHeaderClick1(prevState => !prevState);
                setPostSelect('카리나');
@@ -372,20 +392,19 @@ function App() {
           return}
             else if(appState.content.length>100){alert(' 100글자 이하로 써줘요!!');
           return}
-
+//  ,폼에서 전송버튼눌럿을때 작동하는 것들
             const newContentsList={
               id:uuid4(),
               name:appState.name,
               content:appState.content,
               // label:appState.postSelect,
-              postSelect:appState.postSelect
+              label:appState.postSelect
             };
-           
-            dispatch(updateList([...list,newContentsList]));
-            setList([...list,newContentsList]);
+            dispatch(updateList([...appState.list,newContentsList,]));
+            // setList([...list,newContentsList,]);
             // dispatch(updateName(''));
             // dispatch(updateContent(''));
-            console.log(updateList);
+            // console.log(updateList);
             // console.log(list)
             setName('');
             setContent('');
@@ -401,7 +420,8 @@ function App() {
                 // console.log(name);
               }} placeholder="최대 10글자 까지!" value={name}></Input>
             </FormDiv>
-{/* input */}
+            
+{/* input 에서 입력한거 추적*/}
             <FormDiv>
               <Label>내용:</Label>
               <Textarea onChange={(e) => {
@@ -419,10 +439,14 @@ function App() {
             
                                   }}
               onChange={(e)=>{
-                dispatch(updatePostSelect(e.target.value))
-                setPostSelect(e.target.value)
+                dispatch(updatePostSelect(e.target.value));
+                setPostSelect(e.target.value);
+                setHeaderClick1(e.target.value === "카리나");
+                setHeaderClick2(e.target.value === "윈터");
+                setHeaderClick3(e.target.value === "닝닝");
+                setHeaderClick4(e.target.value === "지젤");
                 }}
-                
+                // 셀렉트에서 선택하면 위에는 안바뀌는거 연동 
             value={postSelect}>
                 <option value="카리나">카리나</option>
                 <option value="윈터">윈터</option>
@@ -442,8 +466,11 @@ function App() {
           headerclick4={headerclick4}
           />):''
           } */}
-             {headerClicks.map((click, index) => (
-          click ? (
+
+{/* 리스트 맵 함수로 돌려서 보여주는곳 */}
+             {
+          headerClicks.map((headerClicks, index) => (
+            headerClicks ===true ? (
             <ContentBox
               key={index}
               list={appState.list}
@@ -455,7 +482,9 @@ function App() {
               headerclick4={index === 3}
             />
           ) : null
-        ))}
+        )) }
+
+    
         </>} />
         <Route path="/detail/:id" element={<Detail Container={Container} list={list} setList={setList}></Detail>} />
 
