@@ -19,7 +19,7 @@ function Detail({ list,setList }) {
     <>
     <Link to='/'><RefBun bg={'green'}>되돌아가기</RefBun></Link>
     <img src='https://i.namu.wiki/i/dE4-V5zTsBBRqHJcjBc_H-uPBBJ8bKa23ecQ-L_uhelHzA6MADc4KrmmYgqPaSfIPiLWO2rm3Zu5qu_OCsEEqy7YRA_2W0yAYEhikRQAiAzlYR5bXPzbafHFimy7W2V8-FBHGjgKJWgL9hvc0TNlTw.webp'></img>
-    <p>몰?루?</p>
+    <p>몰?루?d</p>
     </>)
 }
 
