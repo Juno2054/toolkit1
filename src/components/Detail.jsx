@@ -1,11 +1,11 @@
 import React, { useState,  } from 'react'
 import { useDispatch,useSelector } from "react-redux";
 import { useParams ,Link, useNavigate,  } from 'react-router-dom';
-import { Container,  } from '../App'
+import { Container,  } from '../style'
 import ContentBox from './ContentBox';
-import { ULB,LIB,ListDiv,Pcon,RefBun,TextArea,ConBoxTitle} from '../App'
+import { ULB,LIB,ListDiv,Pcon,RefBun,TextArea,ConBoxTitle} from '../style'
 // import { Context1 } from '../App';
-import {  updateList,   } from "../store";
+import {  updateList,   } from "../redux/modules/appSlice";
 
  
 

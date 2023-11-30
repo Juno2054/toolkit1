@@ -1,257 +1,38 @@
 import React, {  useState, useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
-import { updateContent, updateList, updateName, updatePostSelect ,updateLocalDate} from "./store";
+import { updateContent, updateList, updateName, updatePostSelect ,updateLocalDate} from "./redux/modules/appSlice";
 import './App.css';
 import './reset.css';
 import ContentBox from "./components/ContentBox";
-import styled from 'styled-components';
-import Detail from "./components/Detail";
-import {Routes, Route, Link } from "react-router-dom";
-import uuid4 from "uuid4";
-import fakeData from "./fakeData.json"
-import fakeData2 from"./fakeData2.json"
-
-
-
-// export const Context1 =createContext();
-
-// 
-// styled-components 사용 부분
-let Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: url("https://i.pinimg.com/originals/19/23/32/192332eebcc51b403e5ad37c94ddc991.jpg");
-    background-size: cover;
-    width: 100%;
-    height: ${props=>props.he};
-    max-width: 2000px;
-    min-width: 500px;
-    margin-left:auto;
-    margin-right: auto;
-    
-`;
-let Header = styled.div`
-    position: relative;
-    background-image: url();
-    background-color: green;
-    background-size: 25%;
-    width: 100%;
-    height: 400px;
-    margin-bottom: 20px;
-`
-let Pcon = styled.p`
-    margin-left: 50px;
-    background-color: rgb(37, 33, 33);
-    border-radius: 10px;
-    padding: 10px;
-    white-space: ${props=>props.ws};
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-decoration: none;
-    color: white;;
-    line-height: 2.1;
-`
-let H1 = styled.div`
-  position: absolute;
-  top: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  font-size: 50px;
-  color: black;
-  min-width: 450px;
-`
-let ULT = styled.ul`
-    position: absolute;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid white;
-    border-radius: 10px;
-    list-style: none;
-    padding: 15px;
-    width: 500px;
-
-`
-let LIT = styled.li`
-     font-size: 20px;
-    border: 1px solid black;
-    border-radius: 5px;
-    width: 100px;
-    padding: 5px;
-    text-align: center;
-    user-select: none;
-    cursor: pointer;
-    background-color: ${props=>props.bg };
-    color: whitesmoke;
-    transition: all 0.5s;
-    &:hover{
-    transform: scale(1.2);
-    color: #005e74
-    }
-`;
-let ULB = styled.ul`
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: ${props=>props.wd};
-    height: ${props=>props.he};
-    background-color:transparent;
-    padding: 20px;
-    border-radius: 5px;
-    margin: 0px auto;
-    border: 2px solid black;
-    transition: all 0.7s;
-    &:hover{
-      transform: scale(1.2);
-      background-color:#333333;
-    }
-
-    
-`
-let LIB = styled(Link)`
-    text-decoration: none;
-    color: white;;
-    
-li{
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    border: 1px solid white;
-    border-radius: 5px;
-    cursor: pointer;
-    
-    }
-
-`;
-let Form = styled.form`
-   width: 500px;
-    background-color: transparent;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 2px solid white;
-  
-`
-let FormDiv = styled.div`
-    margin-bottom: 10px;
-    display: flex;
-`
-let Label = styled.label`
-    width: 100px;
-    display: flex;
-    align-items: center;
-`
-let Input = styled.input`
-  width: 100%;
-    padding: 5px 10px;
-`
-let Textarea = styled.textarea`
-    resize: none;
-    height: 80px;
-    width: 100%;
-    padding: 5px 10px;
-`
-let Button = styled.button`
-    background-color: rgb(0, 0, 0);
-    font-size: 14px;
-    padding: 5px 10px;
-    cursor: pointer;
-    user-select: none;
-    background-color:transparent;
-    text-align: right;
-    color: white;
-    transition: all 1s;
-    &:hover{
-      background-color: #ff79b0;
-
-    }
-`
-let ListDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: ${props=>props.wd};
-    background-color: transparent;
-    padding: 20px;
-    border-radius: 5px;
-    margin: 0px auto;
-    border: 2px solid white;
-    transition: all 0.6s;
-
-`
-
-let RefBun = styled.button`
-  background-color: ${props=>props.bg };
-  font-size: 14px;
-    padding: 5px 10px;
-    cursor: pointer;
-    user-select: none;
-    text-align: right;
-    color: white;
-    transition: all 0.5s;
-    margin: 10px;
-    &:hover{
-      background-color: #ff2b0f;
-
-    }
-
-`
-let TextArea= styled.textarea`
-    width: 95%;
-    background-color: rgb(37, 33, 33);
-    border-radius: 10px;
-    padding: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-decoration: none;
-    color: white;;
-    
-`
-let MainBgimg= styled.img`
-  background-image:url('https://pickcon.co.kr/site/data/img_dir/2021/05/10/2021051080072_0.jpg');
-  width:  100%;
-  height: 100%;
-  background-size: cover;
-  
-   `
-let ConBoxTitle= styled.div`
-  width: ${props=>props.wd};
-  height: ${props=>props.hg};
-  padding: ${props=>props.pd};
-  margin: 10px 30px;
-  text-align  :center ;
-  font-size: 30px;
-  color: white;
-  border: 3px solid white;
-
-  
-`
-// 위에는 styled-components
-export {
-  Container,
+import {    Container,
   Header,
   H1,
   ULT,
   LIT,
-  ULB,
-  LIB,
   Form,
   FormDiv,
   Label,
   Input,
   Textarea,
   Button,
-  ListDiv,
-  Pcon,
   RefBun,
-  TextArea,
-  ConBoxTitle
-};
+  MainBgimg,
+  Navigation , } from"./style"
+import Detail from "./components/Detail";
+import {Routes, Route, Link } from "react-router-dom";
+import uuid4 from "uuid4";
+
+import Login from "./page/Login"
+import CheckLogin from "./page/Logincheck";
+
+
+// export const Context1 =createContext();
+
+// 
+// styled-components 사용 부분
+
+// 위에는 styled-components
+
 //styled-components export 한것들
 
 function App() {
@@ -259,7 +40,6 @@ function App() {
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
   const [postSelect,setPostSelect]=useState('');
-
   const dispatch = useDispatch();
   const appState= useSelector((state)=>state.app);
   // const listLocalStorage=useSelector((state)=>state.local);
@@ -269,61 +49,21 @@ function App() {
   let [headerclick2, setHeaderClick2] = useState(false);
   let [headerclick3, setHeaderClick3] = useState(false);
   let [headerclick4, setHeaderClick4] = useState(false);
-//로딩때 데이터를 안가져와서 데이터도 가져오게함 
-
-// useEffect(()=>{
-//   setList(['']);
-//   return()=>{
-//     setList([]);
-//     dispatch(updateList([]));
-//   }
-// },[])
 
   useEffect(()=>{
-    // dispatch(updateLocalDate([fakeData2]));
-    // dispatch(updateList([...list]));
+    CheckLogin();
+  },[])
+  useEffect(()=>{
     dispatch(updatePostSelect('카리나'));
-    setHeaderClick1(true);
+    setHeaderClick1(true); 
   },[]);
     //처음에 안불러와져서 다 false로 해둔후 페이지 로딩되면 카리나만 true로 바꿈
 
-
   const headerClicks = [headerclick1, headerclick2, headerclick3, headerclick4];
 
-  // const contextValue = {
-  //   list,
-  //   setList,
-  //   name,
-  //   setName,
-  //   content,
-  //   setContent,
-  //   postSelect,
-  //   setPostSelect,
-  //   headerclick1,
-  //   headerclick2,
-  //   headerclick3,
-  //   headerclick4,
-  //   setHeaderClick1,
-  //   setHeaderClick2,
-  //   setHeaderClick3,
-  //   setHeaderClick4,
-  // };
 
-
-  // function addlist() {
-  //   let copy1 = [...name];
-  //   let copy2 = [...content];
-  //   let copy3 = [...list]
-  //   copy1.push(inputName)
-  //   copy2.push(inputContent)
-  //   setName(copy1);
-  //   setContent(copy2);
-  //   copy3.push({ name: inputName, content: inputContent })
-  //   setList(copy3);
-  //   console.log(list);
-  // }
   return (
-    // <Context1.Provider store={store}>
+
     <Container he={'100%'}>
     
       <Routes>
@@ -337,8 +77,18 @@ function App() {
     <img style={{width :"30%",}}
     src='https://i.namu.wiki/i/dE4-V5zTsBBRqHJcjBc_H-uPBBJ8bKa23ecQ-L_uhelHzA6MADc4KrmmYgqPaSfIPiLWO2rm3Zu5qu_OCsEEqy7YRA_2W0yAYEhikRQAiAzlYR5bXPzbafHFimy7W2V8-FBHGjgKJWgL9hvc0TNlTw.webp'></img>
 
-    </> } />
-        <Route path="/" element={<>
+</> } />
+   
+        <Route path="/login" element={
+          <Login></Login>  
+        }/>
+        <Route path="/" render={()=>{
+
+        }} element={<>
+          <Navigation>
+            <div><h1>Home</h1></div>
+            <Link to="/login">로그인</Link>
+          </Navigation>
           <Header>
           <MainBgimg></MainBgimg>
             <H1 ></H1>
@@ -401,11 +151,6 @@ function App() {
               label:appState.postSelect
             };
             dispatch(updateList([...appState.list,newContentsList,]));
-            // setList([...list,newContentsList,]);
-            // dispatch(updateName(''));
-            // dispatch(updateContent(''));
-            // console.log(updateList);
-            // console.log(list)
             setName('');
             setContent('');
           }}>
@@ -417,7 +162,6 @@ function App() {
                 dispatch(updateName(e.target.value));
                 setName(e.target.value);
                 if(name.length>=10){alert('10글자이하!')};
-                // console.log(name);
               }} placeholder="최대 10글자 까지!" value={name}></Input>
             </FormDiv>
             
@@ -491,7 +235,7 @@ function App() {
       </Routes>
 
     </Container>
-    // </Context1.Provider>
+
   );
 }
 

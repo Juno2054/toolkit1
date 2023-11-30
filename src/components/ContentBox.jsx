@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { ULB,LIB,ListDiv,Pcon,ConBoxTitle} from '../App'
+import { ULB,LIB,ListDiv,Pcon,ConBoxTitle} from '../style'
 import { Link } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
-import { updateList } from '../store';
+import { updateList } from '../redux/modules/appSlice';
 
 
 function ContentBox({headerclick1,headerclick2,headerclick3,headerclick4}) {
