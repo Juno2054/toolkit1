@@ -15,10 +15,13 @@ function Detail() {
   
   const { id } = useParams();
   const appState= useSelector((state)=>state.app);
+ 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const selectedItem = appState.list.find((item) => item.id === id);
-
+  const userId=localStorage.getItem('userId');
+  const userc= appState.list.find((item) => item.userid === userId);
+  console.log(userc)
   const [editing, setEditing]=useState(false);
   const [editedContent, setEditedContent] = useState(selectedItem?selectedItem.content:'');
 
@@ -121,6 +124,7 @@ function Detail() {
           <div style={{display:"none"}}>
           <ContentBox list={appState.list}/>
           </div>
+          {selectedItem.userid===localStorage.getItem('userId')&&(
           <div style={{
                 display: 'flex',
                 justifyContent: 'flex-end',
@@ -133,7 +137,7 @@ function Detail() {
               </>): <RefBun bg={'#005e74;'} onClick={editDetail}>수정</RefBun>
               }
           
-          </div>
+          </div>)}
           <Link to='/'><RefBun bg={'#327e6f'}>되돌아가기</RefBun></Link>
         </LIB>
       </ULB>

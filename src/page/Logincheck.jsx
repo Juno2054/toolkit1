@@ -19,6 +19,7 @@ try {
     });
     if (response.status === 200) {
         console.log('유저정보', response.data);
+
     }
 
 } catch (error) {

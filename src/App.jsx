@@ -1,74 +1,108 @@
-import React, {  useState, useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
-import { updateContent, updateList, updateName, updatePostSelect ,updateLocalDate} from "./redux/modules/appSlice";
+import React, { useEffect, useState } from "react";
 import './App.css';
 import './reset.css';
-import ContentBox from "./components/ContentBox";
-import {    Container,
-  Header,
-  H1,
-  ULT,
-  LIT,
-  Form,
-  FormDiv,
-  Label,
-  Input,
-  Textarea,
-  Button,
-  RefBun,
-  MainBgimg,
-  Navigation , } from"./style"
+import {    Container,RefBun,Navigation, Button, SImg , } from"./style"
 import Detail from "./components/Detail";
-import {Routes, Route, Link } from "react-router-dom";
-import uuid4 from "uuid4";
-
+import {Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
 import Login from "./page/Login"
-import CheckLogin from "./page/Logincheck";
+import Home from "./page/Home";
+import Mypage from "./page/mypage";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 
-// export const Context1 =createContext();
-
-// 
-// styled-components 사용 부분
-
-// 위에는 styled-components
-
-//styled-components export 한것들
 
 function App() {
-  const [list,setList]=useState([]);
-  const [name, setName] = useState('');
-  const [content, setContent] = useState('');
-  const [postSelect,setPostSelect]=useState('');
-  const dispatch = useDispatch();
-  const appState= useSelector((state)=>state.app);
-  // const listLocalStorage=useSelector((state)=>state.local);
 
+const dispatch=useDispatch();
+const navigate= useNavigate();
+const accessToken = localStorage.getItem('accessToken');
+const [userinfo, setUserinfo] = useState(null);
+const [isLogin, setIsLogin] = useState(false);
+const token = localStorage.getItem('accessToken');
+const username = useSelector(state => state.user.nickname);
 
-  let [headerclick1, setHeaderClick1] = useState(false);
-  let [headerclick2, setHeaderClick2] = useState(false);
-  let [headerclick3, setHeaderClick3] = useState(false);
-  let [headerclick4, setHeaderClick4] = useState(false);
-
+const tokenCheck = async () => {
+try
+{
+const response = await axios.get('https://moneyfulpublicpolicy.co.kr/user/', 
+{headers: {Authorization: `Bearer ${token}`},
+});
+if(response.status === 200)
+{
+   dispatch(setUserinfo(response.data.nickname));  
+   setIsLogin(true);
+}else{
+  Error('로그인');
+}
+}catch(error){
+  if(error.response.status === 401){
+   localStorage.removeItem('accessToken');
+   localStorage.removeItem('id');
+   localStorage.removeItem('nickname');
+   localStorage.removeItem('아바타');
+   setIsLogin(false);
+  }
+}
+alert('로그인 후 이용해주세요!');
+navigate('/login');
+} 
+const location =useLocation();
   useEffect(()=>{
-    CheckLogin();
+  if(location.pathname !== '/login'&& !token){
+    tokenCheck();
+    console.log(userinfo);
+  }},[isLogin]);
+  const login =()=>{
+    setIsLogin(true);
+  }
+  const logout =()=>{
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('id');
+    localStorage.removeItem('nickname');
+    localStorage.removeItem('아바타');
+    setIsLogin(false);
+    alert('로그아웃 되었습니다.');
+    navigate('/login')
+  }
+  useEffect(()=>{
+    if(token){
+      login();
+    }else{
+      logout();
+    }
   },[])
-  useEffect(()=>{
-    dispatch(updatePostSelect('카리나'));
-    setHeaderClick1(true); 
-  },[]);
-    //처음에 안불러와져서 다 false로 해둔후 페이지 로딩되면 카리나만 true로 바꿈
-
-  const headerClicks = [headerclick1, headerclick2, headerclick3, headerclick4];
-
 
   return (
-
+   
     <Container he={'100%'}>
-    
+      {
+        accessToken?(
+      <Navigation>
+            <Link style={{
+              textDecoration: "none",
+              color: "white",
+              marginLeft:"30px",
+              fontWeight:"bold",
+              fontSize:"30px",
+            }} to="/"><h1>Home</h1></Link>
+            <div style={{display:'flex',alignItems:"center", justifyContent:'flex-end'}} >
+           <SImg style={{width:'20%',height:'25%',maxWidth:'70px',maxHeight:'80px'}} src={localStorage.getItem('아바타')  } alt="메인프로필이미지"/> 
+            <Link style={{
+              textDecoration: "none",
+              color: "white",
+              marginRight:"10px",
+              marginLeft:"10px",
+            }} to="/mypage">
+              {username}</Link>
+            <Button style={{
+              marginLeft:"10px",
+            }} onClick={logout}>로그아웃</Button>
+            </div>
+      </Navigation>):''}
       <Routes>
         {/* 메인페이지 */}
-        <Route path="*" element={     <>
+        <Route path="*" element={<>
     <Link to='/'><RefBun bg={'green'}>되돌아가기</RefBun></Link>
     <h1 style={{
     color:"white",
@@ -76,164 +110,12 @@ function App() {
    }}> 몰?루? 는 페이지임 돌아가죠 ??</h1>
     <img style={{width :"30%",}}
     src='https://i.namu.wiki/i/dE4-V5zTsBBRqHJcjBc_H-uPBBJ8bKa23ecQ-L_uhelHzA6MADc4KrmmYgqPaSfIPiLWO2rm3Zu5qu_OCsEEqy7YRA_2W0yAYEhikRQAiAzlYR5bXPzbafHFimy7W2V8-FBHGjgKJWgL9hvc0TNlTw.webp'></img>
-
 </> } />
-   
-        <Route path="/login" element={
-          <Login></Login>  
-        }/>
-        <Route path="/" render={()=>{
-
-        }} element={<>
-          <Navigation>
-            <div><h1>Home</h1></div>
-            <Link to="/login">로그인</Link>
-          </Navigation>
-          <Header>
-          <MainBgimg></MainBgimg>
-            <H1 ></H1>
-            <ULT>
-              {/* //상단 리스트 */}
-              <LIT bg={headerclick1==true ? '#ff79b0':'transparent'} onClick={() => {
-               setHeaderClick1(prevState => !prevState);
-               setPostSelect('카리나');
-               dispatch(updatePostSelect('카리나'));
-               setHeaderClick2(false);
-               setHeaderClick3(false);
-               setHeaderClick4(false);
-
-              }}>카리나</LIT>
-
-              <LIT bg={headerclick2==true ? '#ff79b0':'transparent'}onClick={() => {
-                setHeaderClick2(prevState => !prevState);
-                setPostSelect('윈터');
-                dispatch(updatePostSelect('윈터'));
-                setHeaderClick1(false);
-                setHeaderClick3(false);
-                setHeaderClick4(false);
-              }}>윈터</LIT>
-
-              <LIT bg={headerclick3==true ? '#ff79b0':'transparent'}onClick={() => {
-                setHeaderClick3(prevState => !prevState);
-                setPostSelect('닝닝');
-                dispatch(updatePostSelect('닝닝'));
-                setHeaderClick1(false);
-                setHeaderClick2(false);
-                setHeaderClick4(false);
-              }}>닝닝</LIT>
-
-              <LIT bg={headerclick4==true ? '#ff79b0':'transparent'} onClick={() => {
-               setHeaderClick4(prevState => !prevState);
-               setPostSelect('지젤');
-               dispatch(updatePostSelect('지젤'));
-               setHeaderClick1(false);
-               setHeaderClick2(false);
-               setHeaderClick3(false);
-              }}>지젤</LIT>
-            </ULT>
-          </Header>
-          <Form onSubmit={function(e){
-            e.preventDefault();
-            if(appState.name.length<3){alert(' 닉네임에 3글자이상은 적어줘요');
-          return}
-            else if(appState.content.length<10){alert(' 내용에 10글자이상은 적어줘요');
-          return}
-          if(appState.name.length>10){alert(' 10글자 이하로써줘요!!');
-          return}
-            else if(appState.content.length>100){alert(' 100글자 이하로 써줘요!!');
-          return}
-//  ,폼에서 전송버튼눌럿을때 작동하는 것들
-            const newContentsList={
-              id:uuid4(),
-              name:appState.name,
-              content:appState.content,
-              // label:appState.postSelect,
-              label:appState.postSelect
-            };
-            dispatch(updateList([...appState.list,newContentsList,]));
-            setName('');
-            setContent('');
-          }}>
-            <FormDiv>
-              <Label>닉네임:</Label>
-              <Input type="text" 
-              
-               onChange={(e) => {
-                dispatch(updateName(e.target.value));
-                setName(e.target.value);
-                if(name.length>=10){alert('10글자이하!')};
-              }} placeholder="최대 10글자 까지!" value={name}></Input>
-            </FormDiv>
-            
-{/* input 에서 입력한거 추적*/}
-            <FormDiv>
-              <Label>내용:</Label>
-              <Textarea onChange={(e) => {
-                dispatch(updateContent(e.target.value));
-                setContent(e.target.value);
-                
-                if(content.length>=100){alert('100글자이하!')};
-                // console.log(content);
-              }} placeholder="최대 100글자 까지!" value={content}></Textarea>
-            </FormDiv>
-
-            <FormDiv>
-              <Label>누구한테?</Label>
-              <select style={{transition:"all 0.5s",
-            
-                                  }}
-              onChange={(e)=>{
-                dispatch(updatePostSelect(e.target.value));
-                setPostSelect(e.target.value);
-                setHeaderClick1(e.target.value === "카리나");
-                setHeaderClick2(e.target.value === "윈터");
-                setHeaderClick3(e.target.value === "닝닝");
-                setHeaderClick4(e.target.value === "지젤");
-                }}
-                // 셀렉트에서 선택하면 위에는 안바뀌는거 연동 
-            value={postSelect}>
-                <option value="카리나">카리나</option>
-                <option value="윈터">윈터</option>
-                <option value="닝닝">닝닝</option>
-                <option value="지젤">지젤</option>
-              </select>
-            </FormDiv>
-            <FormDiv style={{ justifyContent: "flex-end" }}>
-              <Button type="submit">등록하기!</Button>
-               {/* 디테일페이지 확인용 <Link to='/detail'>디테일</Link> */}
-               
-            </FormDiv>
-          </Form>
-          {/* {headerclick1?(
-          <ContentBox list={list} setList={setList} postSelect={postSelect}
-          headerclick1={headerclick1} headerclick2={headerclick2} headerclick3={headerclick3}
-          headerclick4={headerclick4}
-          />):''
-          } */}
-
-{/* 리스트 맵 함수로 돌려서 보여주는곳 */}
-             {
-          headerClicks.map((headerClicks, index) => (
-            headerClicks ===true ? (
-            <ContentBox
-              key={index}
-              list={appState.list}
-              setList={(newList) => dispatch(updateList(newList))}
-              postSelect={(appState.postSelect)}
-              headerclick1={index === 0}
-              headerclick2={index === 1}
-              headerclick3={index === 2}
-              headerclick4={index === 3}
-            />
-          ) : null
-        )) }
-
-    
-        </>} />
-        <Route path="/detail/:id" element={<Detail Container={Container} list={list} setList={setList}></Detail>} />
-
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/mypage" element={<Mypage/>}/>
+        <Route path="/"  element={<Home/>} />
+        <Route path="/detail/:id" element={<Detail Container={Container} ></Detail>} />
       </Routes>
-
     </Container>
 
   );

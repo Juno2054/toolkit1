@@ -231,6 +231,19 @@ let Navigation = styled.nav`
     gap: 20px;
     width: 100%;
 `
+let SImg  =styled.img`
+width: 100px;
+height: 100px;
+border-radius: 50%;
+`
+let MypageDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 30px;
+  padding: 20px;
+  font-weight: 1000;
+  `
 export {
     Container,
     Header,
@@ -253,4 +266,6 @@ export {
     MainBgimg,
     StyledH1,
     Navigation ,
+    SImg,
+    MypageDiv,
   };
